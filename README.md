@@ -37,4 +37,4 @@ Pastikan untuk mengganti `http://yourweb.com/tech` dengan URL situs web yang ing
 
 ## Kontribusi
 
-Jika Anda ingin berkontribusi pada pengembangan **litool**, Anda dapat melakukan fork repositori ini, membuat perubahan yang diperlukan, dan mengajukan pull request. Kami sangat menghargai setiap kontribusi yang diberikan oleh komunitas.
+Jika Anda ingin berkontribusi pada pengembangan **litool**, Anda dapat melakukan fork repositori ini, terimakasih.
