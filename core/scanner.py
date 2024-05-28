@@ -15,16 +15,26 @@ class Scanner:
         response = HttpUtils.send_request(self.url, self.timeout)
         results = []
         if response:
-            self.logger.log(f"Received response: {response.status_code} {response.reason}")
-            vulnerabilities = self.detect_vulnerabilities(response)
-            if vulnerabilities:
-                self.logger.log("Vulnerabilities detected:")
-                for vulnerability in vulnerabilities:
-                    self.logger.log(f"- {vulnerability}")
-                results.append(f"Vulnerabilities detected: {', '.join(vulnerabilities)}")
+            if "internetpositif.id" in response.url:
+                self.logger.log("This website is potentially dangerous.")
+                results.append("This website is potentially dangerous.")
             else:
-                self.logger.log("No vulnerabilities detected.")
-                results.append("No vulnerabilities detected")
+                self.logger.log(f"Received response: {response.status_code} {response.reason}")
+                if response.status_code == 200:
+                    self.logger.log("This website is safe.")
+                    results.append("This website is safe.")
+                else:
+                    self.logger.log("This website may be unsafe.")
+                    results.append("This website may be unsafe.")
+                vulnerabilities = self.detect_vulnerabilities(response)
+                if vulnerabilities:
+                    self.logger.log("Vulnerabilities detected:")
+                    for vulnerability in vulnerabilities:
+                        self.logger.log(f"- {vulnerability}")
+                    results.append("Vulnerabilities detected")
+                else:
+                    self.logger.log("No vulnerabilities detected.")
+                    results.append("No vulnerabilities detected")
         else:
             self.logger.log("Failed to get a response from the target.")
             results.append("Failed to get a response")
